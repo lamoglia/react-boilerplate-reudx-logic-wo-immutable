@@ -52,7 +52,7 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
-const render = (messages) => {
+const render = () => {
   ReactDOM.render(
     <Provider store={store}>
       <Router
@@ -68,6 +68,8 @@ const render = (messages) => {
     document.getElementById('app')
   );
 };
+
+render();
 
 // Install ServiceWorker and AppCache in the end since
 // it's not most important operation and if main code fails,

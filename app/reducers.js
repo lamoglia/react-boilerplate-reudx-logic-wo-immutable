@@ -6,8 +6,6 @@ import { routerReducer } from 'react-router-redux';
  * If we were to do this in store.js, reducers wouldn't be hot reloadable.
  */
 
-import { LOCATION_CHANGE } from 'react-router-redux';
-
 /**
  * Creates the main reducer with the asynchronously loaded ones
  */

@@ -15,7 +15,7 @@ import {
 
 // Fixtures
 
-const initialState = { reduced: 'soon' });
+const initialState = { reduced: 'soon' };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -53,7 +53,7 @@ describe('asyncInjectors', () => {
 
       store.dispatch({ type: 'TRIGGER_TEST' });
       const actual = store.getState().test;
-      const expected = { ...initialState, reduced: 'yup' });
+      const expected = { ...initialState, reduced: 'yup' };
       expect(actual).toEqual(expected);
     });
 
