@@ -1,0 +1,28 @@
+ {
+      path: '{{ path }}',
+      name: '{{ camelCase component }}',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/{{ properCase component }}/reducer'),
+          {{#if useLogic}}
+          import('containers/{{ properCase component }}/logic'),
+          {{/if}}
+          import('containers/{{ properCase component }}'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer,{{#if useLogic}} logic,{{/if}} component]) => {
+          injectReducer('{{ camelCase component }}', reducer.default);
+          {{#if useLogic}}
+          injectLogic(logic.default);
+          if (logic.onLogicInit) {
+            logic.onLogicInit(store);
+          }
+          {{/if}}
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    },$1
