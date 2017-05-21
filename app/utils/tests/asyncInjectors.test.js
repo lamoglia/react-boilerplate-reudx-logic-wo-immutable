@@ -4,7 +4,6 @@
 
 import { memoryHistory } from 'react-router';
 import { createLogic } from 'redux-logic';
-import { fromJS } from 'immutable';
 
 import configureStore from 'store';
 
@@ -16,12 +15,12 @@ import {
 
 // Fixtures
 
-const initialState = fromJS({ reduced: 'soon' });
+const initialState = { reduced: 'soon' });
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'TEST':
-      return state.set('reduced', action.payload);
+      return { ...state, reduced: action.payload };
     default:
       return state;
   }
@@ -53,9 +52,9 @@ describe('asyncInjectors', () => {
       injectLogic(logic);
 
       store.dispatch({ type: 'TRIGGER_TEST' });
-      const actual = store.getState().get('test');
-      const expected = initialState.merge({ reduced: 'yup' });
-      expect(actual.toJS()).toEqual(expected.toJS());
+      const actual = store.getState().test;
+      const expected = { ...initialState, reduced: 'yup' });
+      expect(actual).toEqual(expected);
     });
 
     it('should throw if passed invalid store shape', () => {
@@ -86,10 +85,10 @@ describe('asyncInjectors', () => {
 
         injectReducer('test', reducer);
 
-        const actual = store.getState().get('test');
+        const actual = store.getState().test;
         const expected = initialState;
 
-        expect(actual.toJS()).toEqual(expected.toJS());
+        expect(actual).toEqual(expected);
       });
 
       it('should not assign reducer if already existing', () => {
@@ -148,9 +147,9 @@ describe('asyncInjectors', () => {
         injectLogic(logic);
 
         store.dispatch({ type: 'TRIGGER_TEST' });
-        const actual = store.getState().get('test');
-        const expected = initialState.merge({ reduced: 'yup' });
-        expect(actual.toJS()).toEqual(expected.toJS());
+        const actual = store.getState().test;
+        const expected = { ...initialState, reduced: 'yup' };
+        expect(actual).toEqual(expected);
       });
 
       it('should throw if passed invalid logic', () => {
